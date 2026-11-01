@@ -1,0 +1,5 @@
+{
+  "Tooltip_ExSuQing_ActualCapacity": "超级升级实际可用容量：%1",
+  "Tooltip_ExSuQing_BaseCapacity": "超级升级基础容量：%1（升级时原生%2×2）",
+  "Tooltip_ExSuQing_SuperUpgrade": "容量突破：基础%1 → %2"
+}

@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+*.class
+*.log
+.env
+.env.*
+!.env.example
+/output/
+/releases/
+/validation/
+/backups/
+*.zip

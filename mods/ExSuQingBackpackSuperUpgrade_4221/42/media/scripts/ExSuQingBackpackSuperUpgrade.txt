@@ -1,0 +1,47 @@
+module ExSuQingBackpackSuperUpgrade
+{
+    craftRecipe ExSuQingSuperUpgrade
+    {
+        Icon = Item_ExSuQingSuperUpgrade,
+        timedAction = SewingCloth,
+        Time = 180,
+        NeedToBeLearn = False,
+        AllowBatchCraft = False,
+        Tags = InHandCraft,
+        category = ExSuQing,
+        SkillRequired = Tailoring:5,
+        OnTest = ExSuQingBackpackSuperUpgrade.TestUpgrade,
+        OnCreate = ExSuQingBackpackSuperUpgrade.CreateUpgrade,
+        inputs
+        {
+            item 1 [LB.Bag_LegendaryBackpack;LB.Bag_LegendaryBackpack_Black;LB.Bag_LegendaryBackpack_Blue;LB.Bag_LegendaryBackpack_Brown;LB.Bag_LegendaryBackpack_Green;LB.Bag_LegendaryBackpack_Orange;LB.Bag_LegendaryBackpack_Pink;LB.Bag_LegendaryBackpack_Purple;LB.Bag_LegendaryBackpack_Red;LB.Bag_LegendaryBackpack_White;Base.ResidentEvilBackPack] mode:keep flags[IsNotWorn;AllowFavorite;ItemCount],
+            item 1 tags[base:sewingneedle] mode:keep,
+            item 40 [Base.RippedSheets] mode:destroy,
+            item 20 [Base.LeatherStrips] mode:destroy,
+            item 20 [Base.Thread],
+            item 4 [Base.PremiumFishingLine],
+        }
+        outputs
+        {
+        }
+    }
+    craftRecipe ExSuQingRestore
+    {
+        Icon = Item_ExSuQingRestore,
+        timedAction = SewingCloth,
+        Time = 40,
+        NeedToBeLearn = False,
+        AllowBatchCraft = False,
+        Tags = InHandCraft,
+        category = ExSuQing,
+        OnTest = ExSuQingBackpackSuperUpgrade.TestRestore,
+        OnCreate = ExSuQingBackpackSuperUpgrade.CreateRestore,
+        inputs
+        {
+            item 1 [LB.Bag_LegendaryBackpack;LB.Bag_LegendaryBackpack_Black;LB.Bag_LegendaryBackpack_Blue;LB.Bag_LegendaryBackpack_Brown;LB.Bag_LegendaryBackpack_Green;LB.Bag_LegendaryBackpack_Orange;LB.Bag_LegendaryBackpack_Pink;LB.Bag_LegendaryBackpack_Purple;LB.Bag_LegendaryBackpack_Red;LB.Bag_LegendaryBackpack_White;Base.ResidentEvilBackPack] mode:keep flags[IsNotWorn;AllowFavorite;ItemCount],
+        }
+        outputs
+        {
+        }
+    }
+}

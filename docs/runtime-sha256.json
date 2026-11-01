@@ -1,0 +1,32 @@
+{
+  "mod_id": "ExSuQingBackpackSuperUpgrade_4221",
+  "version": "1.0.0-rc.2",
+  "files": {
+    "42/icon.png": "2a82146fcab5f12d9efc971e0f5468102f36bbf4ecd657d210b15579d31e84c2",
+    "42/media/lua/client/ExSuQingBackpackSuperUpgrade_Bootstrap.lua": "29d04e0193233bbd4fd19ec77058dfc0c492ed37bfe3bbbbf66475c887943d86",
+    "42/media/lua/client/ExSuQingBackpackSuperUpgrade_Crafting.lua": "d62a2a57fa4f6cdd9b13ad4e4c88b8672acb89bebacf430651aa670efa1bbfcd",
+    "42/media/lua/client/ExSuQingBackpackSuperUpgrade_Tooltip.lua": "9233ff63cbde11272360bd27c6da7113f4a7ae853631dedc7adf949b30040b0a",
+    "42/media/lua/shared/ExSuQingBackpackSuperUpgrade/Capacity.lua": "59d1ac6901b764db6ef75a7607e934558de1a1b36d370914ec4653ffe440dce7",
+    "42/media/lua/shared/ExSuQingBackpackSuperUpgrade/Conversions.lua": "e55a473bb7ad8214d9eb0cc6f143f48a5a92bb331e983fdc6fbf07935b642265",
+    "42/media/lua/shared/ExSuQingBackpackSuperUpgrade/Core.lua": "358b4e6b83ca675f9b5b084af4a60a5f7392c0414fec45b71dc5a1af62d63a8a",
+    "42/media/lua/shared/ExSuQingBackpackSuperUpgrade/Refund.lua": "5996ba43cb97ee24523b13908bc9c8018e65867ed9e871c5892ee4b36e80105e",
+    "42/media/lua/shared/Translate/CH/IG_UI.json": "600e6802fabfa103136b9c6598f52b1ae50ef1c780c202482e0c0c866b9916da",
+    "42/media/lua/shared/Translate/CH/Recipes.json": "d7df9be5a9efc02b2a7f860585f305a08109f959977b5da4fdc050ef8eab9705",
+    "42/media/lua/shared/Translate/CH/Tooltip.json": "22cf40c36b283224ec59bafa1517a7d3b37ed1deb706c8ded6aceeb0d725777d",
+    "42/media/lua/shared/Translate/CN/IG_UI.json": "600e6802fabfa103136b9c6598f52b1ae50ef1c780c202482e0c0c866b9916da",
+    "42/media/lua/shared/Translate/CN/Recipes.json": "d7df9be5a9efc02b2a7f860585f305a08109f959977b5da4fdc050ef8eab9705",
+    "42/media/lua/shared/Translate/CN/Tooltip.json": "22cf40c36b283224ec59bafa1517a7d3b37ed1deb706c8ded6aceeb0d725777d",
+    "42/media/lua/shared/Translate/EN/IG_UI.json": "7d650532609fef5f9e9bccd0d1c4e3e9b47f59faf117fb5a6047fd82d8c54611",
+    "42/media/lua/shared/Translate/EN/Recipes.json": "42fb2bdc4c88aa1b44c68f9c7277be5f03068dd79b3b49992b2307000b969e89",
+    "42/media/lua/shared/Translate/EN/Tooltip.json": "08ab49872669d372282e20c332b3932a5d0035bf6803be768757d788b61e9f88",
+    "42/media/scripts/ExSuQingBackpackSuperUpgrade.txt": "9367bbb892235f948cf1d6eef3713b2571aa7af96ba339f8b9a4decbe17e6670",
+    "42/media/textures/Item_ExSuQingRestore.png": "0c0b592969ab63da40f3f4805a934ab815aac2c7dc49d1430149e1aa214fd55e",
+    "42/media/textures/Item_ExSuQingSuperUpgrade.png": "dbe6dc494cefb98cf24f45db9cdabfa1af97d6919e779c28dcfccad234f2134a",
+    "42/media/ui/CategoryIcon/ExSuQing.png": "dbe6dc494cefb98cf24f45db9cdabfa1af97d6919e779c28dcfccad234f2134a",
+    "42/mod.info": "ed36876a87dc75c5082101625f59004b527e35462626aece9346b5e4ad583b1d",
+    "42/poster-character-sample.png": "31fb8f307f248082f4d36224f6e1f6a7c5a6f14f80af6ea7ca6020b4ba3212f3",
+    "42/poster.png": "7fcd78208fa9f91ab5d5823a02e7337c86d1327a105bdc10c8341c1665eef6c5",
+    "common/README.txt": "3abee30b8d34c3f7148437af11a1969eb6f6e9fdfaa4eac207c866a1e69c482d",
+    "README.txt": "5e731fea4acfcd2912d4fa309675f0cf41b927cf44400c6d7d2bd0b253b86740"
+  }
+}

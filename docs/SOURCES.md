@@ -1,0 +1,5 @@
+# 来源与素材 / Sources and assets
+
+中文：运行目录沿用作者维护的 1.0.0-rc.2 开发安装包，包含自制 Lua、配方、多语言翻译与 AI 辅助图标/人物样图。原装备来自 Legendary Backpack (`LBB42`) 与 Raccoon City (`RaccoonCityB42`)，猫又岭和 HavenFall 的额外适配在单独补丁合集维护；不打包来源模组的代码、模型、音效或装备贴图。测试 fixture 和 Java 反射检查为开发验证代码。游戏 stdlib、游戏 JAR 及可选上游源码仅从使用者自己的安装目录读取，不进入本仓库。未对整个仓库擅自指定原创或开源许可。
+
+English: The runtime directory preserves the author's maintained 1.0.0-rc.2 development package, including authored Lua, recipes, translations and AI-assisted icons/character artwork. Original equipment comes from Legendary Backpack (`LBB42`) and Raccoon City (`RaccoonCityB42`); additional Nekomata Ridge and HavenFall support belongs to the separate patch collection. Original mods' code, models, sounds and equipment textures are not bundled. Mock fixtures and Java reflection checks are development validation code. Game stdlib, game JAR and optional upstream sources are read from the user's own installation and are not included. No blanket original-work or open-source license is assigned.
