@@ -1,5 +1,7 @@
 # 蘇清的背包超级升级模组 / SuQing’s Backpack Super Upgrades Mod
 
+[中文](#中文) · [English](#english)
+
 **1.0.0-rc.2 · Project Zomboid Build 42.21 · 单人候选版 / Single-player release candidate**
 
 ## 中文
@@ -10,7 +12,7 @@
 
 基础包只直接支持传奇背包的 10 个颜色 ID，以及 `Base.ResidentEvilBackPack` 生化背包，共 11 个 ID。需要自行安装对应的 `LBB42` 或 `RaccoonCityB42` 来源模组；本仓库不打包它们。生化背带、箱子、车厢不在基础范围。
 
-作者当前组合还使用[蘇清的综合补丁 / SuQing’s Project Zomboid Patches](https://github.com/suching8848/suqing-project-zomboid-patches)。**主模组不包含这些独立兼容层；使用对应组合时需要同时安装所列补丁，不能只下载主模组并期待全部扩展生效。**
+作者当前组合还使用[蘇清的僵尸毁灭工程补丁合集 / SuQing’s Project Zomboid Patches](https://github.com/suching8848/suqing-project-zomboid-patches)。**主模组不包含这些独立兼容层；使用对应组合时需要同时安装所列补丁，不能只下载主模组并期待全部扩展生效。**
 
 | 使用组合 | 需要核对的补丁 Mod ID | 作用和边界 |
 | --- | --- | --- |
@@ -87,3 +89,15 @@ After saving and exiting normally, disabling removes the EX capacity effect whil
 This is a release candidate, without a claim of full edge-case or multiplayer validation. Controlled engine fixtures and native recipe tests from development are retained; see [Testing](docs/TESTING.md) for the portable entry point. Offline Kahlua, mock items and native parsing do not replace in-game transfer, patch/appearance conversion, UI and save/reload checks.
 
 Runtime files are preserved. Only authored validation sources and useful tools were migrated; no personal saves, backups, deployment/rollback scripts, game stdlib or upstream mod source is included. The character sample and icons are AI-assisted project assets; promotional artwork does not add a character skin. Original equipment and compatibility targets belong to their authors; no blanket open-source license has been assigned. See [Sources and assets](docs/SOURCES.md).
+
+## 相关项目与配置快照
+
+[全部 8 个模组与补丁仓库](docs/project-index.md) · [当前单人档 205 项启用顺序](docs/current-single-player-modlist.md) · [作者 Steam 合集](https://steamcommunity.com/sharedfiles/filedetails/?id=3823981387)
+
+源码索引涵盖 37 个 Mod ID。Steam 合集不附带独立本地补丁；按各项目的前置和条件兼容说明选择子项。启用快照不代表每个项目或新增版本均已通过游戏内验收。
+
+## Related projects and setup snapshot
+
+[All eight mod and patch repositories](docs/project-index.md) · [Current 205-ID enabled order](docs/current-single-player-modlist.md) · [Author’s Steam collection](https://steamcommunity.com/sharedfiles/filedetails/?id=3823981387)
+
+The source index covers 37 Mod IDs. The Steam collection does not include separately installed local patches; select entries using each project’s requirements and conditional integration notes. Enabled state does not establish in-game acceptance of every project or new version.
