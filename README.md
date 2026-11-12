@@ -4,6 +4,13 @@
 
 **1.0.0-rc.2 · Project Zomboid Build 42.21 · 单人候选版 / Single-player release candidate**
 
+## 42.22.2 离线适配候选 / Offline compatibility candidate
+
+继续使用 `1.0.0-rc.2` 接口版本，沿用已有 EX 记录、独立容量和普通升级桥。候选支持 B42.21–42.22 单人。42.22.2 游戏内读档待验。
+
+The B42.21–42.22 single-player candidate keeps the `1.0.0-rc.2` interface, existing EX records, the capacity overlay, and the ordinary-upgrade bridge. In-game reload on 42.22.2 is pending.
+
+
 ## 中文
 
 独立的一次性背包容量翻倍扩展。保留 Mod ID `ExSuQingBackpackSuperUpgrade_4221`、版本、物品与配方；本仓库的 `mods/` 与当前开发安装包逐文件一致。它与[普通容器升级模组](https://github.com/suching8848/suqing-container-upgrade)是不同项目，可以共存并分别还原，不强制依赖普通版。
