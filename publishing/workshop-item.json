@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "app_id": 108600,
+  "workshop_item_id": "3832223700",
+  "version": "1.0.0-rc.2",
+  "workshop_url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3832223700",
+  "title": "蘇清的背包超级升级模组 | SuQing's Backpack Super Upgrades",
+  "visibility": "public",
+  "visibility_value": 0,
+  "mod_versions": {
+    "Codex_SuQingWearableCompat_4221": "1.0.1",
+    "CodexNekomataEXCompat_4221": "1.0.1",
+    "CodexNekomataEXUpgrade_4221": "1.0.1",
+    "ExSuQingBackpackSuperUpgrade_4221": "1.0.0-rc.2"
+  },
+  "verified_at_bjt": "2026-11-15T18:26:06.909758+08:00",
+  "content_tree_sha256": "ac2853557abf8362abad625ac621010aa6826aae28cfe61f7cce1692ac0eb68c",
+  "content_bytes": 3679148,
+  "content_file_count": 36,
+  "tags": [
+    "Build 42",
+    "Items",
+    "Clothing/Armor",
+    "Balance",
+    "QOL"
+  ],
+  "actual_workshop_children": [],
+  "actual_preview_bytes": 825121,
+  "verification_scope": "Native success plus exact text, metadata tree hash, content-byte total, tags and preview presence; not a remote per-file SHA download.",
+  "mod_id": "ExSuQingBackpackSuperUpgrade_4221",
+  "publishedfileid": "3832223700",
+  "github_repository": "https://github.com/suching8848/suqing-backpack-super-upgrade",
+  "recorded_at_bjt": "2026-11-15T18:26:06.909758+08:00",
+  "public": true,
+  "state": "uploaded_verified_public",
+  "uploaded": true,
+  "upload_acknowledged": true,
+  "native_readback_verified": true,
+  "uploaded_verified_private": false
+}
