@@ -169,11 +169,19 @@ local function indexTable()
     return meta and meta.__index
 end
 
-function C.IsReady()
+function C.IsCapacityLayerReady(effective, room)
     local index = indexTable()
-    return X.IsSinglePlayer() and index ~= nil and C.installedEffective ~= nil
-        and index.getEffectiveCapacity == C.installedEffective and index.hasRoomFor == C.installedRoom
-        and C.installedTransfer ~= nil and javaTransferItems == C.installedTransfer
+    local transfer = C.installedTransfer
+    if not X.IsSinglePlayer() or not index or not effective or not room or not transfer then return false end
+    if index.getEffectiveCapacity == effective and index.hasRoomFor == room
+        and javaTransferItems == transfer then return true end
+    local fridge = SuQingFreshnessFridge and SuQingFreshnessFridge.Capacity
+    return fridge ~= nil and type(fridge.IsWrapping) == "function"
+        and fridge.IsWrapping(effective, room, transfer)
+end
+
+function C.IsReady()
+    return C.IsCapacityLayerReady(C.installedEffective, C.installedRoom)
 end
 
 function C.Install()
