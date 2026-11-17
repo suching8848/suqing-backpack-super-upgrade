@@ -15,11 +15,35 @@ local function withRecord(p,id,paid)
     if paid then r.paidCloth=40;r.paidLeather=20;r.paidThreadUses=20;r.paidPremiumUses=4 end
     b.md[X.modDataKey]=r;return b,r
 end
-case("exact 11 ID whitelist includes all ten legendary variants and excludes controls",function()
-    local count=0
+case("66 legendary upgrade IDs and a restore-only legacy type",function()
+    local count, upgrades, pairsCount=0,0,0
     for fullType in pairs(X.supported)do count=count+1;ok(X.IsSupported(Bag(nil,fullType)))end
-    eq(count,11)
-    for _,id in ipairs({"Base.ResidentEvilSuspenders","Base.Bag_SheetSlingBag","LB.Bag_LegendaryBackpack_NewUnknown","Base.Bag_cat_5"})do eq(X.IsSupported(Bag(nil,id)),false)end
+    for fullType in pairs(X.upgradeTypes) do
+        upgrades = upgrades + 1
+        ok(X.supported[fullType])
+    end
+    for id, partner in pairs(X.variantPairs) do
+        pairsCount = pairsCount + 1
+        eq(X.variantPairs[partner],id)
+    end
+    eq(count,67); eq(upgrades,66); eq(pairsCount,42)
+    for _,id in ipairs({"Base.ResidentEvilSuspenders","Base.Bag_SheetSlingBag","LB.Bag_LegendaryBackpack_NewUnknown",
+        "Base.Bag_cat_5","LD.Bag_LegendaryDuffelbag_Yellow","LK.LegendaryDaishoCaseSealed",
+        "LTW.LegendaryTacticalSwordCaseSealed","LTW.LegendaryTacticalKnifeCaseSealed"})do eq(X.IsSupported(Bag(nil,id)),false)end
+end)
+case("existing legacy EX entitlement remains effective and restorable",function()
+    local p=Character();local b,r=withRecord(p,"Base.ResidentEvilBackPack",true)
+    eq(r.targetCapacity,196); ok(X.HasLegacyUpgrade(b)); ok(X.CanRestore(b,p))
+    local allowed,reason=X.CanUpgrade(b,p);eq(allowed,false);eq(reason,"legacy_restore_only")
+    ok(X.Restore(KeepData(b),p));eq(X.HasLegacyUpgrade(b),false)
+    eq(X.CanUpgrade(b,p),false)
+end)
+case("present ordinary records must be restored before EX",function()
+    local p=Character();local b=Bag(p)
+    b.md.SuQingContainerUpgrade.schema=2
+    local allowed,reason=X.CanUpgrade(b,p);eq(allowed,false);eq(reason,"ordinary_restore_required")
+    b.md.SuQingContainerUpgrade=nil;b.md.SuQingContainerUpgradeAuto={schema=1}
+    eq(X.CanUpgrade(b,p),false);eq(X.GetRecord(b),nil)
 end)
 case("native business baseline is sandbox not clamped getter or ordinary record",function()
     local p=Character();local b=Bag(p,"Base.ResidentEvilBackPack",49)
@@ -35,6 +59,29 @@ case("legendary sandbox bounds match source and missing values default",function
     SandboxVars.LBO.BagCapacity=nil;eq(X.GetNativeBase(b),49)
     SandboxVars.LBO.BagCapacity="49";eq(X.GetNativeBase(b),nil)
     SandboxVars.LBO.BagCapacity=old
+end)
+case("every added family uses its own defaults and sandbox setting",function()
+    local profiles = {
+        { "LD.Bag_LegendaryDuffelbag_Black_LB", "LDO", "BagCapacity", 49, 15, 49 },
+        { "LF.Bag_FannypackBack_Legendary_Yellow", "LFO", "FannyCapacity", 10, 1, 49 },
+        { "LS.Bag_LegendarySatchel_Yellow", "LSO", "BagCapacity", 49, 10, 100 },
+        { "LK.LegendaryDaishoCase", "LKO", "DaishoCaseCapacity", 50, 15, 50 },
+        { "LTW.LegendaryTacticalSwordCase", "LTWO", "SwordCaseCapacity", 50, 15, 50 },
+        { "LTW.LegendaryTacticalKnifeCase", "LTWO", "KnifeCaseCapacity", 25, 5, 50 },
+    }
+    for _, profile in ipairs(profiles) do
+        local id, group, field, default, min, max = unpack(profile)
+        local b = Bag(nil,id)
+        eq(X.GetNativeBase(b),default,id)
+        SandboxVars[group] = { [field] = 0 }
+        eq(X.GetNativeBase(b),min,id)
+        SandboxVars[group][field] = 200
+        eq(X.GetNativeBase(b),max,id)
+        eq(X.NewRecord(b).targetCapacity,max*2,id)
+        SandboxVars[group][field] = "49"
+        eq(X.GetNativeBase(b),nil,id)
+        SandboxVars[group] = nil
+    end
 end)
 case("raccoon invalid sandbox fails closed without mutating record",function()
     local b=Bag(Character(),"Base.ResidentEvilBackPack");local old=SandboxVars.ResidentEvilBackpackCapacity

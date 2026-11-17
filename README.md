@@ -1,5 +1,9 @@
 # 蘇清的背包超级升级模组 / SuQing’s Backpack Super Upgrades Mod
 
+1.0.0-rc.3 拓展传奇 EX，保留非传奇旧 EX 还原，修复行李袋与腰包原位穿戴，更新三个可选兼容子模组。
+
+1.0.0-rc.3 expands Legendary EX, retains legacy restoration, fixes same-slot equipping, and refreshes three optional compatibility mods.
+
 **2026-11-15 兼容修订**。识别返鲜冰箱容量和转移包装。与猫又岭、HavenFall、返鲜冰箱或返鲜餐盒一起使用时，请更新对应模组。组合离线回归通过，制作待实测。
 
 **November 15 compatibility revision**. Recognizes Freshness Fridge capacity and transfer wrappers. Update the matching mods when combining EX with Nekomata Ridge, HavenFall, Freshness Fridge or Lunchbox. Combined offline regression passed. In-game crafting awaits testing.

@@ -4,25 +4,56 @@ ExSuQingBackpackSuperUpgrade = ExSuQingBackpackSuperUpgrade or {}
 local X = ExSuQingBackpackSuperUpgrade
 if X.loaded then return X end
 X.loaded = true
-X.version = "1.0.0-rc.2"
+X.version = "1.0.0-rc.3"
 X.modDataKey = "ExSuQingBackpackSuperUpgrade"
 X.cost = { cloth = 40, leather = 20, threadUses = 20, premiumUses = 4, skill = 5 }
 X.locks = setmetatable({}, { __mode = "k" })
-X.types = {
-    ["LB.Bag_LegendaryBackpack"] = "legendary",
-    ["LB.Bag_LegendaryBackpack_Black"] = "legendary",
-    ["LB.Bag_LegendaryBackpack_Blue"] = "legendary",
-    ["LB.Bag_LegendaryBackpack_Brown"] = "legendary",
-    ["LB.Bag_LegendaryBackpack_Green"] = "legendary",
-    ["LB.Bag_LegendaryBackpack_Orange"] = "legendary",
-    ["LB.Bag_LegendaryBackpack_Pink"] = "legendary",
-    ["LB.Bag_LegendaryBackpack_Purple"] = "legendary",
-    ["LB.Bag_LegendaryBackpack_Red"] = "legendary",
-    ["LB.Bag_LegendaryBackpack_White"] = "legendary",
-    ["Base.ResidentEvilBackPack"] = "raccoon",
+-- Companion bridges may add historical types to these tables for restoration.
+-- Only the audited Legendary catalog is eligible for a new entitlement.
+X.types = { ["Base.ResidentEvilBackPack"] = "raccoon" }
+X.supported = { ["Base.ResidentEvilBackPack"] = true }
+X.upgradeTypes = {}
+X.variantPairs = {}
+
+local nativeProfiles = {
+    legendary = { group = "LBO", field = "BagCapacity", default = 49, min = 10, max = 100 },
+    duffel = { group = "LDO", field = "BagCapacity", default = 49, min = 15, max = 49 },
+    waist = { group = "LFO", field = "FannyCapacity", default = 10, min = 1, max = 49 },
+    satchel = { group = "LSO", field = "BagCapacity", default = 49, min = 10, max = 100 },
+    daishoCase = { group = "LKO", field = "DaishoCaseCapacity", default = 50, min = 15, max = 50 },
+    swordCase = { group = "LTWO", field = "SwordCaseCapacity", default = 50, min = 15, max = 50 },
+    knifeCase = { group = "LTWO", field = "KnifeCaseCapacity", default = 25, min = 5, max = 50 },
 }
-X.supported = {}
-for fullType in pairs(X.types) do X.supported[fullType] = true end
+
+local function add(fullType, kind)
+    X.types[fullType] = kind
+    X.supported[fullType] = true
+    X.upgradeTypes[fullType] = true
+end
+
+local function addPair(first, second, kind)
+    add(first, kind)
+    add(second, kind)
+    X.variantPairs[first], X.variantPairs[second] = second, first
+end
+
+local function addWaistPair(color)
+    addPair("LF.Bag_FannypackFront_Legendary_" .. color, "LF.Bag_FannypackBack_Legendary_" .. color, "waist")
+end
+
+for _, color in ipairs({ "Grey", "Black", "Blue", "Brown", "Green", "Orange", "Pink", "Purple", "Red", "White" }) do
+    local backpack = color == "Grey" and "LB.Bag_LegendaryBackpack" or "LB.Bag_LegendaryBackpack_" .. color
+    add(backpack, "legendary")
+    local duffel = "LD.Bag_LegendaryDuffelbag_" .. color
+    addPair(duffel, duffel .. "_LB", "duffel")
+    addWaistPair(color)
+    add("LS.Bag_LegendarySatchel_" .. color, "satchel")
+end
+addWaistPair("Yellow")
+add("LS.Bag_LegendarySatchel_Yellow", "satchel")
+add("LK.LegendaryDaishoCase", "daishoCase")
+add("LTW.LegendaryTacticalSwordCase", "swordCase")
+add("LTW.LegendaryTacticalKnifeCase", "knifeCase")
 
 function X.IsInteger(value, low, high)
     return type(value) == "number" and value == value and value == math.floor(value)
@@ -58,20 +89,21 @@ function X.CopyRecord(record)
     return copy(record)
 end
 
--- Business baselines, before traits and before either ordinary or EX upgrades.
--- Legendary's original sandbox script clamps 10..100. Raccoon is 1..1000.
--- Explicit invalid values fail closed rather than charging a guessed result.
+-- Business baselines before traits or upgrades. Apply the exact clamps used by
+-- each original sandbox script. Explicitly invalid values prohibit payment.
 function X.GetNativeBase(item)
     if not X.IsSupported(item) then return nil, "unsupported" end
     local kind = X.types[item:getFullType()]
-    local value
-    if kind == "legendary" then
-        value = SandboxVars and SandboxVars.LBO and SandboxVars.LBO.BagCapacity
-        if value == nil then value = 49 end
+    local profile = nativeProfiles[kind]
+    if profile then
+        local group = SandboxVars and SandboxVars[profile.group]
+        local value = group and group[profile.field]
+        if value == nil then value = profile.default end
         if not X.IsInteger(value, -100000, 100000) then return nil, "invalid_native_capacity" end
-        return math.max(10, math.min(100, value))
+        return math.max(profile.min, math.min(profile.max, value))
     end
-    value = SandboxVars and SandboxVars.ResidentEvilBackpackCapacity
+    if kind ~= "raccoon" then return nil, "unsupported" end
+    local value = SandboxVars and SandboxVars.ResidentEvilBackpackCapacity
     if value == nil then value = 49 end
     if not X.IsInteger(value, 1, 1000) then return nil, "invalid_native_capacity" end
     return value
@@ -83,14 +115,19 @@ function X.IsValidRecord(record, item)
         or not X.IsInteger(record.nativeBase, 1, 1000)
         or record.targetCapacity ~= record.nativeBase * 2
         or record.paidLedgerVersion ~= 1 then return false end
-    if X.types[record.fullType] == "legendary"
-        and not X.IsInteger(record.nativeBase, 10, 100) then return false end
+    local profile = nativeProfiles[X.types[record.fullType]]
+    if profile and not X.IsInteger(record.nativeBase, profile.min, profile.max) then return false end
     if item and (not X.IsSupported(item) or item:getFullType() ~= record.fullType) then return false end
     local empty = record.paidCloth == 0 and record.paidLeather == 0
         and record.paidThreadUses == 0 and record.paidPremiumUses == 0
     local full = record.paidCloth == X.cost.cloth and record.paidLeather == X.cost.leather
         and record.paidThreadUses == X.cost.threadUses and record.paidPremiumUses == X.cost.premiumUses
     return empty or full
+end
+
+function X.HasLegacyUpgrade(item)
+    return X.IsSupported(item) and not X.upgradeTypes[item:getFullType()]
+        and X.IsValidRecord(X.GetRecord(item), item)
 end
 
 function X.NewRecord(item)
@@ -125,7 +162,8 @@ local function checkTarget(item, character)
     if not character or not character.getInventory then return false, "no_character" end
     if item:getContainer() ~= character:getInventory()
         or not character:getInventory():getItems():contains(item) then return false, "not_carried" end
-    if character:isEquipped(item) or character:getPrimaryHandItem() == item
+    if character:isEquipped(item) or (character.isAttachedItem and character:isAttachedItem(item))
+        or character:getPrimaryHandItem() == item
         or character:getSecondaryHandItem() == item then return false, "equipped" end
     if item:getInventory():getItems():size() ~= 0 then return false, "not_empty" end
     if item.getFluidContainer then
@@ -142,12 +180,24 @@ local function checkTarget(item, character)
 end
 
 function X.CanUpgrade(item, character)
+    if not X.IsSupported(item) then return false, "unsupported" end
+    local fullType = item:getFullType()
+    if not X.upgradeTypes[fullType] then return false, "legacy_restore_only" end
     local ok, reason, state = checkTarget(item, character)
     if not ok then return false, reason end
     if state.upgraded then return false, "already_ex" end
+    local modData = item:getModData()
+    for _, key in ipairs({ "SuQingContainerUpgrade", "SuQingContainerUpgradeAuto" }) do
+        local record = modData[key]
+        if type(record) == "table" and (record.schema == 1 or record.schema == 2) then
+            return false, "ordinary_restore_required"
+        end
+    end
     if not X.Capacity or not X.Capacity.IsReady() then return false, "capacity_not_ready" end
-    if X.types[item:getFullType()] == "legendary" and (not X.Conversions
+    if X.types[fullType] == "legendary" and (not X.Conversions
         or not X.Conversions.IsReady or not X.Conversions.IsReady()) then return false, "conversion_not_ready" end
+    if X.variantPairs[fullType] and (not X.Conversions or not X.Conversions.IsVariantReady
+        or not X.Conversions.IsVariantReady(item)) then return false, "conversion_not_ready" end
     if character:getPerkLevel(Perks.Tailoring) < X.cost.skill then return false, "skill" end
     local record, nativeReason = X.NewRecord(item)
     if not record then return false, nativeReason end

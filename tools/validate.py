@@ -22,17 +22,20 @@ def main():
   cp=str(jar)+os.pathsep+str(work);base=[java,'-Duser.home='+str(work/'home'),'-cp',cp]
   compile_file=work/'compile.lua'
   compile_file.write_text('\n'.join('assert(loadstring('+json.dumps(f.read_text(encoding='utf-8-sig'),ensure_ascii=False)+','+json.dumps(f.name)+'))' for f in sorted(lua.rglob('*.lua')))+'\nreturn "all runtime Lua compiled"\n',encoding='utf-8')
-  subprocess.run(base+['KahluaValidation',str(compile_file)],check=True)
+  subprocess.run(base+['KahluaValidation',str(compile_file)],cwd=game,check=True)
   if record['mod_id'].startswith('Ex'):
    shared=lua/'shared/ExSuQingBackpackSuperUpgrade'
    common=[stdlib,tests/'fixture.lua',shared/'Core.lua',shared/'Capacity.lua',shared/'Refund.lua']
-   suites=[common+[tests/'core_capacity_tests.lua'],common+[lua/'client/ExSuQingBackpackSuperUpgrade_Crafting.lua',tests/'crafting_tests.lua']]
+   suites=[common+[tests/'core_capacity_tests.lua'],
+      common+[lua/'client/ExSuQingBackpackSuperUpgrade_Crafting.lua',tests/'crafting_tests.lua'],
+      common+[game/'media/lua/shared/TimedActions/ISClothingExtraAction.lua',
+          shared/'Conversions.lua',tests/'variant_tests.lua']]
    recipe=source/'42/media/scripts/ExSuQingBackpackSuperUpgrade.txt'
   else:
    shared=lua/'shared/SuQingContainerUpgradeAuto'
    suites=[[stdlib,tests/'engine_fixture.lua',shared/'Compatibility.lua',shared/'AutoPolicy.lua',shared/'Core.lua',shared/'Refund.lua',shared/'Auto.lua',lua/'client/SuQingContainerUpgradeAuto_Crafting.lua',tests/'auto_fixture.lua',tests/'auto_tests.lua']]
    recipe=source/'42/media/scripts/SuQingContainerUpgradeAuto.txt'
-  for suite in suites:subprocess.run(base+['KahluaValidation']+[str(f) for f in suite],check=True)
-  subprocess.run(base+[native,str(recipe)],check=True)
+  for suite in suites:subprocess.run(base+['KahluaValidation']+[str(f) for f in suite],cwd=game,check=True)
+  subprocess.run(base+[native,str(recipe)],cwd=game,check=True)
  print('OFFLINE PASS. Controlled fixtures/native parser do not establish in-game acceptance.')
 if __name__=='__main__':main()

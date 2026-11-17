@@ -13,5 +13,6 @@ Events.OnGameStart.Add(function()
     print("[ExSuQingBackpackSuperUpgrade] " .. X.version
         .. " capacityReady=" .. tostring(X.Capacity.IsReady())
         .. " conversionsReady=" .. tostring(X.Conversions.IsReady())
+        .. " positionReady=" .. tostring(X.Conversions.IsVariantReady())
         .. "; no physical-stat writes; no personal-save migration")
 end)

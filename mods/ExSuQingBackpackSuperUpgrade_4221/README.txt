@@ -1,39 +1,24 @@
-蘇清的背包超级升级 1.0.0-rc.2
-Build 42.21 单人最终待验收测试包
-
-rc.2接入独立人物头像、容量翻倍升级和解除返料图标，制作分类共用升级图标。
-容量、扣料、还原和共存逻辑沿用已通过离线回归的rc.1；图标显示仍需游戏内确认。
+蘇清的背包超级升级 1.0.0-rc.3
+B42.21–42.22 单人候选 / Single-player candidate
 
 这是独立模组，ID：ExSuQingBackpackSuperUpgrade_4221。
 不依赖普通“蘇清的容器升级”，可以单独开关、与普通版共存。
 安装状态以安装回执为准。安装仅新增本模组目录并追加启用ID，不替换普通版或工坊原件。
 初次安装不批量改写世界物品，实际升级由你在制作菜单中操作。
 
-【首批适配】
-LB.Bag_LegendaryBackpack
-LB.Bag_LegendaryBackpack_Black
-LB.Bag_LegendaryBackpack_Blue
-LB.Bag_LegendaryBackpack_Brown
-LB.Bag_LegendaryBackpack_Green
-LB.Bag_LegendaryBackpack_Orange
-LB.Bag_LegendaryBackpack_Pink
-LB.Bag_LegendaryBackpack_Purple
-LB.Bag_LegendaryBackpack_Red
-LB.Bag_LegendaryBackpack_White
-Base.ResidentEvilBackPack
-
-每个物品仍需它所属的原装备模组。缺少来源模组时不会凭空增加这些装备。
-生化背带、普通包、箱子、车厢不在超级强化首批名单。
+【适配范围】
+传奇背包 10 款、行李袋 20 个位置／颜色变体、腰包 22 个位置／颜色变体、挎包 11 款和开封刀箱 3 款，共 66 个 ID。每个物品需要它所属的装备模组。封装刀箱仍按原配方开封。
+已有非传奇 EX 记录仍可生效和还原。猫猫背包和 HavenFall 需要匹配 rc.3 的兼容补丁。
 
 【升级】
-制作菜单“蘇清·超级升级”分类，使用“蘇清背包超级升级（原生基础容量×2）”配方。
-卸下背包、不要拿在手上、放在人物主物品栏，清空内部物品和所有液体。
+制作菜单“蘇清·超级升级”分类，使用“传奇容器超级升级（原生基础容量×2）”配方。
+卸下容器、不要拿在手上、放在人物主物品栏，清空内部物品和所有液体。
 需要裁缝5级、针、40干净碎布、20皮革条、20普通线用量、4高级鱼线用量。
 针保留；一满卷普通线20用量，一满卷高级鱼线4用量。
 Debug仅用于生成物品和设技能；真实扣料测试必须关闭免费制作、材料绕过和即时动作。
 
 容量以升级当时未计角色特性的原生业务基础值B为准，保存一次超级强化目标2B。
-传奇默认B=49，目标98；生化按当前沙盒容量读取，B=98时目标196。
+每类传奇容器读取其原模组的沙盒容量，例如基础 49 对应目标 98。
 之后基础容量保留“固定超级强化目标”和“当前原生基础值”的较大者，再计角色特性。
 已有原调用链更高的实际容量继续保留，角色特性不重复计算。
 井井有条示例：98基础对应128有效容量，196基础对应255有效容量。
@@ -50,7 +35,7 @@ Debug仅用于生成物品和设技能；真实扣料测试必须关闭免费制
 真实付过完整材料时返20碎布、10皮革、10普通线用量、2高级鱼线用量。
 线按用量返，不是一整卷；免费制作没有真实付款，不产生返料。
 重复还原不重复返料；失败会尝试恢复原材料实例、用量和超级强化状态，异常写日志。
-普通强化与超级强化有各自独立账本，两个还原顺序均应保留另一种强化与其付款记录。
+普通强化与超级强化有各自独立账本，已有普通升级的传奇容器先还原普通升级。
 
 正常保存退出游戏后停用本模组，再启动时超级强化容量效果消失，物理容量没有被超级强化永久写大。
 超级强化记录仍保留在原物品上，重新启用后恢复同一次超级强化，不再扣料或连续翻倍。
@@ -60,11 +45,19 @@ Debug仅用于生成物品和设技能；真实扣料测试必须关闭免费制
 
 【传奇外观兼容】
 原模组“缝上／拆下布章”会生成新背包，本模组为有效超级强化件保留该动作的内容与记录。
-普通未超级强化件继续使用原动作；超级强化成功换外观后只有新包保留付款权益。
+行李袋高低背和腰包前后位置变化也会转移原来物品的内容和超级升级记录。
+普通未超级强化件继续使用原动作。完成转换后，付款权益归转换后的容器。
 若动作发生外部API错误，恢复尝试与结果写入日志；未完成实机验证的范围请看测试清单。
 
 【验证范围】
 附带离线Lua/Kahlua、原生API签名及静态资源检查记录。
 离线使用实际游戏Kahlua解释器和模拟对象，不等同于运行完整游戏。
 安装不自动启动游戏或执行物品升级；客户端真实装入、保存重进、贴布和开关测试由用户完成。
-多人、联机和Build42.21以外版本未验证。
+多人及联机未验证。
+
+English
+Install the original Legendary equipment mods for the 66 supported IDs. The crafting recipe doubles the native base capacity once for Legendary backpacks, duffels, waist packs, satchels and opened weapon cases. Use the original recipes to open sealed cases.
+
+Empty and unequip the container and place it in main inventory. The recipe requires Tailoring 5, a kept needle, 40 clean ripped sheets, 20 leather strips, 20 thread uses and 4 premium fishing line uses. Restoration returns 50% of the actual payment. Position changes and Legendary Backpack patch changes preserve the record and contents.
+
+Existing non-Legendary records remain effective and restorable. MaoMao and HavenFall records require the matching rc.3 compatibility patches. The game itself still needs single-player acceptance testing.

@@ -17,6 +17,23 @@ public class NativeRecipeAudit {
         }
         throw new NoSuchFieldException(name);
     }
+    static Set<String> legendaryTargets() {
+        Set<String> result = new HashSet<>();
+        for (String color : List.of("Grey", "Black", "Blue", "Brown", "Green", "Orange", "Pink", "Purple", "Red", "White", "Yellow")) {
+            result.add("LF.Bag_FannypackFront_Legendary_" + color);
+            result.add("LF.Bag_FannypackBack_Legendary_" + color);
+            result.add("LS.Bag_LegendarySatchel_" + color);
+            if ("Yellow".equals(color)) continue;
+            result.add("Grey".equals(color) ? "LB.Bag_LegendaryBackpack" : "LB.Bag_LegendaryBackpack_" + color);
+            String duffel = "LD.Bag_LegendaryDuffelbag_" + color;
+            result.add(duffel);
+            result.add(duffel + "_LB");
+        }
+        result.add("LK.LegendaryDaishoCase");
+        result.add("LTW.LegendaryTacticalSwordCase");
+        result.add("LTW.LegendaryTacticalKnifeCase");
+        return result;
+    }
     public static void main(String[] args) throws Exception {
         Class<?> scriptItem=Class.forName("zombie.scripting.objects.Item");
         Object empty=scriptItem.getConstructor().newInstance();
@@ -50,10 +67,10 @@ public class NativeRecipeAudit {
                 check((Boolean)inputClass.getMethod("isKeep").invoke(target),"target kept "+name);
                 check((Boolean)inputClass.getMethod("isItemCount").invoke(target),"target counts objects "+name);
                 List<?> ids=(List<?>)inputClass.getMethod("getItems").invoke(target);
-                check(ids.size()==11,"native target whitelist eleven "+name);
-                check(new HashSet<Object>(ids).size()==11,"native target IDs distinct "+name);
-                check(ids.contains("Base.ResidentEvilBackPack"),"native target includes biological backpack");
-                check(!ids.contains("Base.ResidentEvilSuspenders"),"native target excludes suspenders");
+                Set<String> expected = legendaryTargets();
+                if (!upgrade) expected.add("Base.ResidentEvilBackPack");
+                check(ids.size() == expected.size(), "native target count " + name);
+                check(expected.equals(new HashSet<>(ids)), "exact native targets " + name);
                 if(upgrade) {
                     float[] amounts={1,1,40,20,20,4};
                     for(int i=0;i<inputs.size();i++)

@@ -1,1 +1,1 @@
-Build 42.21 files are in ../42. This independent mod has no runtime dependency on the ordinary SuQing container-upgrade mod.
+The B42.21–42.22 runtime files are in ../42. See ../README.txt for supported items, recipes and restoration.
